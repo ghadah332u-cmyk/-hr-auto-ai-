@@ -3,7 +3,7 @@ import streamlit as st
 st.set_page_config(page_title="HR-Auto AI - نظام التوظيف الذكي", layout="wide")
 
 st.title("🇸🇦 HR-Auto AI: نظام تقييم السير الذاتية ومطابقة الوظائف في السعودية")
-st.write("منصة ذكية تدمج تحليل الكفاءات، ربط الكوادر بأبرز الشركات في المملكة، وتوفير المسارات الوظيفية.")
+st.write("منصة ذكية تدمج تحليل الكفاءات، ربط الكوادَر بأبرز الشركات في المملكة، وتوفير المسارات الوظيفية.")
 
 # القوائم والبيانات المتاحة في السوق السعودي ضمن النظام
 saudi_sectors = {
@@ -14,39 +14,21 @@ saudi_sectors = {
 }
 
 # شريط جانبي للتنقل
-menu = st.sidebar.selectbox("اختر القسم:", ["تحليل السيرة الذاتية (CV)", "استعراض الشركات والوظائف", "تقييم الجدارة القيادية"])
+menu = st.sidebar.selectbox("اختر القسم", ["تحليل السيرة الذاتية (CV)", "تقييم الجدارة القيادية"])
 
 if menu == "تحليل السيرة الذاتية (CV)":
-    st.header("📄 رفع وتحليل السيرة الذاتية بالذكاء الاصطناعي")
+    st.header("رفع وتحليل السيرة الذاتية بالذكاء الاصطناعي")
     
-    uploaded_file = st.file_uploader("ارفع سيرتك الذاتية (PDF أو TXT):", type=["pdf", "txt"])
-    target_sector = st.selectbox("اختر القطاع المستهدف في السعودية:", list(saudi_sectors.keys()))
+    uploaded_file = st.file_uploader("ارفع سيرتك الذاتية (PDF أو TXT)", type=["pdf", "txt"])
+    target_sector = st.selectbox("اختر القطاع المستهدف في السعودية", list(saudi_sectors.keys()))
     
     if uploaded_file is not None:
-        st.success("تم رفع السيرة الذاتية بنجاح وتقييمها مبدئياً!")
-        st.info(f"الملاءمة مع قطاع {target_sector}: 88% - الملف جاهز للفرز الآلي لدى شركات القطاع.")
-    else:
-        st.warning("الرجاء رفع ملف السيرة الذاتية لتفعيل التحليل الفوري.")
-
-elif menu == "استعراض الشركات والوظائف":
-    st.header("🏢 دليل الشركات والوظائف المتاحة في السوق السعودي")
-    
-    selected_sector = st.selectbox("اختر القطاع:", list(saudi_sectors.keys()))
-    
-    st.write(f"### أبرز الشركات في قطاع {selected_sector}:")
-    for company in saudi_sectors[selected_sector]:
-        with st.expander(company):
-            st.write(f"**القطاع:** {selected_sector}")
-            st.write("**الوظائف المتاحة حالياً:** محلل بيانات، مهندس برمجيات، أخصائي موارد بشرية، مدير مشروع.")
-            st.button(f"التقديم على وظائف {company}", key=company)
+        st.success("تم رفع الملف بنجاح! جاري التحليل...")
+        st.info(f"القطاع المستهدف: {target_sector}")
+        st.write("الشركات المقترحة لمطابقة سيرتك الذاتية:")
+        for company in saudi_sectors[target_sector]:
+            st.write(f"- {company}")
 
 elif menu == "تقييم الجدارة القيادية":
-    st.header("🎯 نظام تقييم الكفاءة والقيادة")
-    candidate_name = st.text_input("اسم المرشح:")
-    leadership_score = st.slider("تقييم المهارات القيادية (من 100):", 0, 100, 80)
-    
-    if st.button("إصدار تقرير التوظيف"):
-        st.success(f"المرشح: {candidate_name} - المؤشر العام: {leadership_score}%")
-        if leadership_score >= 80:
-            st.balloons()
-            st.write("🌟 مرشح مؤهل بقوة للوظائف الإشرافية في كبرى الشركات السعودية.")
+    st.header("تقييم الجدارة القيادية والإدارية")
+    st.write("هنا يمكنك تقييم المهارات الإدارية والقيادية الخاصة بك.")
